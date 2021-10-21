@@ -1,2 +1,4 @@
-Sett,500000
-Jhin,600000
+Aatrox,635655
+Annie,553108
+Blitzcrank,120107
+Caitlyn,275923
