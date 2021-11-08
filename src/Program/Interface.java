@@ -19,12 +19,13 @@ interface MobaSystem
 	void mainMenu();
 	void login();
 	void userMenu();
+	void adminMenu();
 	void register();
 	void buySkin();
 	void availabilitySkin();
 	void showInventory();
 	void rechargeRp();
-	
+	void userData();
 	
 }
 
@@ -33,10 +34,12 @@ class MobaSystemImpl implements MobaSystem
 	private UserContainer users=new UserContainer();
 	private CharacterContainer characters=new CharacterContainer();
 	private SkinContainer skins=new SkinContainer();
-	private String[] rol= {"SUPORT","ATACK","TOP LANER","MIDDLE LANER","JUNGLER"};
+	private String[] rol= {"SUPORT","ATACK DAMAGE CARRY","TOP LANER","MIDDLE LANER","JUNGLER"};
 	private int[] collectedByRol=new int[5];
+	private int[] characterByRol=new int[5];
 	private String[] region= {"LAS","LAN","EUW","KR","NA","RU"};
 	private int[] collectedByRegion=new int[6];
+	
 	private User currentUser;
 	
 	
@@ -146,7 +149,14 @@ class MobaSystemImpl implements MobaSystem
 					System.out.println("Datos Incorrectos");
 					System.out.println("-------------------------------------------");
 				}
-				else {cicle=false;userMenu();}
+				else 
+				{
+					if(currentUser.getName().equals("admin"))
+					{
+						cicle=false;
+					}
+					else {cicle=false;userMenu();}
+				}
 				break;
 			case "b":
 				register();
@@ -176,7 +186,109 @@ class MobaSystemImpl implements MobaSystem
 				System.out.println("Inicio de sesion exitoso");
 			}
 		}
-		else {System.out.println("Usuario no registrado");}
+		else
+		{
+			if(name.toLowerCase().equals("admin"))
+			{
+				System.out.print("Contraseña: ");
+				String password = sc.nextLine();
+				if(password.toLowerCase().equals("admin"))
+				{
+					adminMenu();
+				}
+			}else {System.out.println("Usuario no registrado");}
+		}
+		
+	}
+	public void adminMenu()
+	{
+		User admin=new User();
+		admin.setName("admin");
+		this.currentUser=admin;
+		boolean cicle = true;
+		Scanner sc = new Scanner(System.in);
+		while(cicle)
+		{
+			System.out.println("Admin menu");
+			System.out.println("Menu de opciones");
+			System.out.println("a)Recaudacion por Rol");
+			System.out.println("b)Ventas por region");
+			System.out.println("c)Ventas por personaje");
+			System.out.println("d)Cantidad de personajes por rol");
+			System.out.println("e)Añadir un personaje");
+			System.out.println("f)Añadir una skin");
+			System.out.println("g)Bloquear jugador");
+			System.out.println("h)Cuentas por nivel mayor a menor");
+			System.out.println("i)Salir");
+			System.out.print("Ingrese operacion a realizar: ");
+			String option = sc.next().toLowerCase();
+			switch (option)
+			{
+			case "a":
+				for(int a=0;a<rol.length;a++)
+				{
+					System.out.println(rol[a]+" con una recaudacion de "+collectedByRol[a]*6.15+"CLP");
+				}
+				break;
+			case "b":
+				for(int a=0;a<region.length;a++)
+				{
+					System.out.println(region[a]+" con una recaudacion de "+collectedByRegion[a]*6.15+"CLP");
+				}
+				break;
+			case "c":
+				for(int a=0;a<characters.getAmount();a++)
+				{
+					System.out.println("El personaje "+characters.getCharacterI(a).getName()+" tiene una recaudacion de "+characters.getCharacterI(a).getCollected()*6.15+"CLP");
+				}
+				break;
+			case "d":
+					for(int b=0;b<characters.getAmount();b++)
+					{
+						switch (characters.getCharacterI(b).getRol())
+						{
+						case "SUP":
+							characterByRol[0]+=1;
+							break;
+						case "ADC":
+							characterByRol[1]+=1;
+							break;
+						case "TOP":
+							characterByRol[2]+=1;
+							break;
+						case "MID":
+							characterByRol[3]+=1;
+							break;
+						case "JG":
+							characterByRol[4]+=1;
+							break;
+						}
+					}
+				for(int a=0;a<rol.length;a++)
+				{
+					System.out.println("El rol "+rol[a]+" tiene "+characterByRol[a]+" personajes");
+				}
+				break;
+			case "e":
+				
+				break;
+			case "f":
+				
+				break;
+			case "g":
+				
+				break;
+			case "h":
+				
+				break;
+			case "i":
+				mainMenu();
+				cicle=false;
+				break;
+			default:
+				System.out.println("Opcion incorrecta");
+			}
+		}
 		
 	}
 	public void register()
@@ -199,6 +311,14 @@ class MobaSystemImpl implements MobaSystem
 				String nick = sc.nextLine();
 				System.out.print("Contraseña: ");
 				String password = sc.nextLine();
+				String[] verifipass = password.split("");
+				while(verifipass.length>=8)
+				{
+					System.out.println("La contraseña debe contener almenos 8 caracteres");
+					System.out.print("Contraseña: ");
+					password = sc.nextLine();
+					verifipass = password.split("");
+				}
 				boolean cicle=true;
 				while(cicle)
 				{
@@ -243,18 +363,6 @@ class MobaSystemImpl implements MobaSystem
 	}
 	public void userMenu()
 	{
-		/*
-		 * Comprar Skin: Se debe ingresar el nombre del personaje, al cual se le comprara la skin.
-		*• Comprar Personaje: Se debe ingresar el nombre del personaje a comprar.
-		*• Skins Disponibles: Se le enseñan al cliente todas las skins del juego exceptuando las que él ya tiene.
-		*• Mostrar Inventario, Se muestran todos los personajes del cliente con sus respectivas skins.
-		*• Recargar RP, se recarga RP a la cuenta
-		*• Mostrar Datos de cuenta: se muestran los datos de su cuenta (Nombre de cuenta, Nick, contraseña (Solo se debe mostrar los últimos 3
-		*caracteres de esta *******123)), se da la posibilidad de cambiar la
-		*contraseña. Para esto se debe pedir ingresar la contraseña antigua,
-		*después ingresar 2 veces la nueva contraseña para comprobar que es la misma
-		 */
-
 			System.out.println("Hola "+currentUser.getName()+" Bienvenido");
 			boolean cicle = true;
 			Scanner sc = new Scanner(System.in);
@@ -275,7 +383,6 @@ class MobaSystemImpl implements MobaSystem
 				{
 				case "a":
 					buySkin();
-					
 					break;
 				case "b":
 					buyCharacter();
@@ -290,7 +397,7 @@ class MobaSystemImpl implements MobaSystem
 					rechargeRp();
 					break;
 				case "f":
-					
+					userData();
 					break;
 				case "g":
 					cicle=false;
@@ -425,6 +532,24 @@ class MobaSystemImpl implements MobaSystem
 		{
 			if(currentUser.searchCharacter(ch)==null)
 			{
+				switch (characters.Search(ch).getRol())
+				{
+				case "SUP":
+					collectedByRol[0]+=975;
+					break;
+				case "ADC":
+					collectedByRol[1]+=975;
+					break;
+				case "TOP":
+					collectedByRol[2]+=975;
+					break;
+				case "MID":
+					collectedByRol[3]+=975;
+					break;
+				case "JG":
+					collectedByRol[4]+=975;
+					break;
+				}
 				currentUser.setRp(currentUser.getRp()-975);
 				currentUser.addCharacter(ch);
 				System.out.println("Personaje comprado nuevo saldo "+currentUser.getRp());
@@ -445,10 +570,6 @@ class MobaSystemImpl implements MobaSystem
 			skinUniqueList="";
 			for(int b=0;b<skinList.length;b++)
 			{
-				if(!(currentUser.searchSkin(list[a],skinList[b])!=null))
-				{
-					skinUniqueList+=skinList[b];
-				}
 				if(b<skinList.length-1)
 				{
 					skinUniqueList+=", ";
@@ -481,7 +602,7 @@ class MobaSystemImpl implements MobaSystem
 	{
 		Scanner sc= new Scanner(System.in);
 		System.out.println("Menu recarga de RP");
-		System.out.println("Su saldo es: "+currentUser.getRp());
+		System.out.println("Su saldo es: "+currentUser.getRp()+"RP");
 		System.out.print("Cuanto RP desea cargar: ");
 		int carga = sc.nextInt();
 		while(carga<0)
@@ -491,5 +612,64 @@ class MobaSystemImpl implements MobaSystem
 			carga = sc.nextInt();
 		}
 		currentUser.setRp(currentUser.getRp()+carga);
+		System.out.println("Su nuevo saldo es: "+currentUser.getRp()+"RP");
 	}
+	public void userData()
+	{
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Datos del Usuario");
+		String password="";
+		String[] parts = currentUser.getPassword().split("");
+		for(int a=0;a<parts.length;a++)
+		{
+			if(parts.length-3>a)
+			{
+				password+="*";
+			}else {password+= parts[a];}
+		}
+		System.out.println("Nombre: "+currentUser.getName()+", Nick: "+currentUser.getNick()+", Contraseña: "+password);
+		System.out.print("Quiere cambiar de contraseña(si - no):");
+		String option=sc.next().toLowerCase();
+		while(!option.equals("si")&&!option.equals("no"))
+		{
+			System.out.println("Opcion no valida");
+			System.out.print("Quiere cambiar de contraseña(si - no):");
+			option=sc.next().toLowerCase();
+		}
+		boolean cicle=false;
+		if(option.equals("si"))
+		{
+			cicle=true;
+		}else {cicle=false;}
+		
+		while(cicle)
+		{
+			System.out.print("Ingrese su contraseña antigua: ");
+			String lasPass=sc.nextLine(); 
+			while(!currentUser.getPassword().equals(lasPass))
+			{
+				System.out.println("Ingrese una contraseña valida");
+				System.out.print("Ingrese su contraseña antigua: ");
+				lasPass=sc.nextLine(); 
+			}
+			System.out.print("Ingrese su nueva contraseña: ");
+			String newPass1 = sc.nextLine();
+			while(newPass1.split("").length<8)
+			{
+				System.out.println("Su contraseña debe tener almenos 8 caracteres");
+				System.out.print("Ingrese su nueva contraseña: ");
+				newPass1 = sc.nextLine();
+			}
+			System.out.print("Ingrese denuevo nueva contraseña para confirmar: ");
+			String newPass2 = sc.nextLine();
+			if(newPass2.equals(newPass1))
+			{
+				System.out.println("Contraseña cambiada con exito");
+				currentUser.setPassword(newPass1);
+				cicle=false;
+			}
+			else {System.out.println("Las contraseñas no coinciden cancelando proceso...");cicle=false;}
+		}
+	}
+	
 }

@@ -24,7 +24,6 @@ class UserContainer
 			return true;
 		}else {return false;}
 	}
-	
 	public int getAmount()
 	{
 		return this.amount;
@@ -94,6 +93,10 @@ class CharacterContainer
 	public int getMax()
 	{
 		return this.max;
+	}
+	public Character getCharacterI(int a)
+	{
+		return character[a];
 	}
 }
 class SkinContainer

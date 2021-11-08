@@ -19,6 +19,7 @@ class User
 	private UserCharacterContainer characterBox=new UserCharacterContainer();
 	
 
+	public User() {}
 	public User(String name, String nick, String region, String password,int lvl, int rp)
 	{
 		super();
