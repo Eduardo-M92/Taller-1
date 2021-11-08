@@ -1,4 +1,5 @@
 Aatrox,ADC,5,Aatrox Justiciero,N,Aatrox Mecha,M,Aatrox Cazador Marino,E,Aatrox Luna de Sangre,L,Aatrox Victorioso,N
-Annie,JG,12,Annie Gótica,L,Annie Caperucita Roja,N,Annie en el País de las Maravillas,E,Annie al Revés,M,Annie Quinceañera,E,Annie Fuego Escarchado,N,Annie Franken Tibbers,N,Annie Osito Panda,N,Annie Cariñosita,L,Annie Hextech,E,Annie Supergalactica,D,Annie—versario,D
+Annie,TOP,12,Annie Gótica,L,Annie Caperucita Roja,N,Annie en el País de las Maravillas,E,Annie al Revés,M,Annie Quinceañera,E,Annie Fuego Escarchado,N,Annie Franken Tibbers,N,Annie Osito Panda,N,Annie Cariñosita,L,Annie Hextech,E,Annie Supergalactica,D,Annie—versario,D
 Blitzcrank,JG,12,Blitzcrank Oxidado,L,Blitzcrank Páralotodo,M,Blitzcrank Boxeador,N,Blitzcrank Talleres Piltóver,E,Este no es Blitzcrank,N,iBlitzcrank,E,Riot Blitzcrank,N,Blitzcrank Subjefe,N,Blitzcrank Lancero Sombrío,N,Blitzcrank Lancero Radiante,E,Blitzcrank Caldero de Bruja,E,Blitz y Crank Onda Espacial,D
 Caitlyn,ADC,12,Caitlyn Rebelde,E,Sheriff Caitlyn,E,Caitlyn Safari,N,Caitlyn Guerras Árticas,M,Oficial Caitlyn,E,Caitlyn Cazadora de Cabezas,L,Caitlyn Espectro Lunar,L,Caitlyn Pulso de Fuego,N,Caitlyn Veraniega,D,Caitlyn de Arcadia,E,Caitlyn de Arcadia Edición Prestigiosa,N,Caitlyn Academia de Combate,E
+Kaisa,JG,2,Kda All Out,L,Exterminador galactico,N

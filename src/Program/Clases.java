@@ -1,5 +1,11 @@
 package Program;
 
+/*
+ * Clase personajes en posecion, y este tendr una lista de kins compradas
+ * 
+ * El usuario no puede tener una lista skins
+ * 
+ */
 class User
 {
 	private String name;
@@ -9,16 +15,11 @@ class User
 	private int lvl;
 	private int rp;
 	
-	//cantidades de PJs y Skins
-	private int amountCh;
-	private int amountSk;
 	
-	private Character[] characters=new Character[155];
-	private Skin[] skins=new Skin[10000];
+	private UserCharacterContainer characterBox=new UserCharacterContainer();
 	
-	
-	public User() {}
-	public User(String name, String nick, String region, String password,int lvl, int rp, int amountCh, int amountSk)
+
+	public User(String name, String nick, String region, String password,int lvl, int rp)
 	{
 		super();
 		this.name = name;
@@ -27,25 +28,14 @@ class User
 		this.password = password;
 		this.lvl = lvl;
 		this.rp = rp;
-		this.amountCh = amountCh;
-		this.amountSk = amountSk;
-
 	}
-	public boolean addCharacter(Character ch)
+	public String getCharacters()
 	{
-		if(amountCh<155)
-		{
-			characters[amountCh]=ch;
-			return true;
-		}else {return false;}
+		return characterBox.getCharacters();
 	}
-	public boolean addSkin(Skin skin)
+	public UserCharacter getCharacter(String name)
 	{
-		if(amountSk<10000)
-		{
-			skins[amountCh]=skin;
-			return true;
-		}else {return false;}
+		return characterBox.Search(name);
 	}
 	public String getName()
 	{
@@ -95,39 +85,42 @@ class User
 	{
 		this.lvl = lvl;
 	}
-	public Skin[] getSkins()
+	public UserCharacter searchCharacter(String name)
 	{
-		return skins;
+		return characterBox.Search(name);
 	}
-	public void setSkins(Skin[] skins)
+	public Skin searchSkin(String characterName,String skinName)
 	{
-		this.skins = skins;
+		if(characterBox.Search(characterName)!=null)
+		{
+			return characterBox.Search(characterName).searchSkin(skinName);
+		}else {return null;}
 	}
-	public Character[] getCharacters()
+	public void addCharacter(UserCharacter character)
 	{
-		return characters;
+		if(character!=null)
+		{
+			this.characterBox.addCharacter(character);
+		}
 	}
-	public void setCharacters(Character[] characters)
+	public void addCharacter(String name)
 	{
-		this.characters = characters;
-	}
-	public int getAmountCh()
+		UserCharacter ch =new UserCharacter(name);
+			this.characterBox.addCharacter(ch);
+		}
+	public int getAmountCharacter()
 	{
-		return amountCh;
+		return this.characterBox.getAmount();
 	}
-	public int getAmountSk()
+	public void addCharacterSkin(String character,Skin skin)
 	{
-		return amountSk;
+		characterBox.Search(character).addSkin(skin);
 	}
-	public void setAmountCh(int amountCh) {
-		this.amountCh = amountCh;
-	}
-	public void setAmountSk(int amountSk) {
-		this.amountSk = amountSk;
-	}
-	public String toString() {
-		return "User [name=" + name + ", nick=" + nick + ", region=" + region + ", password=" + password + ", lvl="
-				+ lvl + ", rp=" + rp + ", amountCh=" + amountCh + ", amountSk=" + amountSk +"]";
+	public void addCharacterSkin(String character,String skin)
+	{
+		Skin sk = new Skin();
+		sk.setName(skin);
+		characterBox.Search(character).addSkin(sk);
 	}
 }
 
@@ -136,14 +129,25 @@ class Skin
 	private String name;
 	private String quality;
 	private Character character;
+	private int price=0;
 	
 	public Skin()
 	{
+		
 	}
-	public Skin(String name,String quality)
+	public int getPrice()
+	{
+		return this.price;
+	}
+	public void setPrice(int price)
+	{
+		this.price=price;
+	}
+	public Skin(String name,String quality,int price)
 	{
 		this.quality=quality;
 		this.name=name;
+		this.price=price;
 	}
 	public String getName() {
 		return name;
@@ -163,19 +167,14 @@ class Skin
 	public void setCharacter(Character character) {
 		this.character = character;
 	}
-	public String toString() {
-		return "Skin [name=" + name + ", quality=" + quality + ", character=" + character.getName() + "]";
-	}
 }
 
 class Character
 {
 	private String name;
 	private String rol;
+	private int collected=0;
 	
-	public Character()
-	{
-	}
 	public Character(String name,String rol)
 	{
 		this.rol=rol;
@@ -193,4 +192,54 @@ class Character
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
+	public void setCollected(int collected)
+	{
+		this.collected=collected;
+	}
+	public int getCollected()
+	{
+		return this.collected;
+	}
+	
+}
+class UserCharacter
+{
+	private String name;
+	private SkinContainer skins=new SkinContainer();
+	
+	public String getSkins()
+	{
+		return skins.getSkins();
+	}
+	public UserCharacter(String name)
+	{
+		super();
+		this.name = name;
+	}
+	public Skin searchSkin(String name)
+	{
+		
+		return skins.Search(name);
+		
+	}
+	public boolean addSkin(Skin skin)
+	{
+		if(skins.getAmount()<10000)
+		{
+			skins.addSkin(skin);
+			return true;
+		}return false;
+	}
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAmountSkins()
+	{
+		return skins.getAmount();
+	}
+	
 }

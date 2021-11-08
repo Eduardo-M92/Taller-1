@@ -1,5 +1,14 @@
 package Program;
 
+/*
+ * 
+ * Definir una interfaz
+ * para los contenedores
+ * y operar con la interfaz
+ * 
+ */
+
+
 class UserContainer
 {
 	private int max=10000;
@@ -31,20 +40,15 @@ class UserContainer
 		}
 		return null;
 	}
-	public String toString() {
-		System.out.println("[max=" + max + ", amount=" + amount + "]");
-		for (int a=0;a<amount;a++)
-		{
-			System.out.println("user=" + user[a]);
-		}
-		return "";
-		
+	public int getMax()
+	{
+		return this.max;
 	}
 }
 //character container
 class CharacterContainer
 {
-	private int max=10000;
+	private int max=155;
 	private Character[] character=new Character[max];
 	private int amount=0;
 	
@@ -73,6 +77,24 @@ class CharacterContainer
 		}
 		return null;
 	}
+	@Override
+	public String toString()
+	{
+		String list = "";
+		for (int a=0;a<amount;a++)
+		{
+			list+=character[a].getName();
+			if(a<amount-1)
+			{
+				list+=",";
+			}
+		}
+		return list;
+	}
+	public int getMax()
+	{
+		return this.max;
+	}
 }
 class SkinContainer
 {
@@ -80,6 +102,22 @@ class SkinContainer
 	private Skin[] skins=new Skin[max];
 	private int amount=0;
 	
+	public String getSkins()
+	{
+		String list="";
+		for(int a=0;a<amount;a++)
+		{
+			if(skins[a]!=null)
+			{
+				list+=skins[a].getName();
+				if(a<amount-1)
+				{
+					list+=", ";
+				}
+			}
+		}
+		return list;
+	}
 	public boolean addSkin(Skin skin)
 	{
 		if (this.max>this.amount)
@@ -104,13 +142,88 @@ class SkinContainer
 			}
 		}return null;
 	}
+	public int getMax()
+	{
+		return this.max;
+	}
 	public String toString()
 	{
-		System.out.println("[max=" + max + ", amount=" + amount + "]");
+		String list = "";
 		for (int a=0;a<amount;a++)
 		{
-			System.out.println("Skin=" + skins[a]);
+			list+=skins[a].getName();
+			if(a<amount-1)
+			{
+				list+=", ";
+			}
 		}
-		return "";
+		return list;
 	}
+	public String searchSkinsByCharacter(String name)
+	{
+		String list="";
+		for(int a=0;a<amount;a++)
+		{
+			if(skins[a].getCharacter().getName().equals(name))
+			{
+				list+=skins[a].getName();
+				if(a<amount-1)
+				{
+					list+=",";
+				}
+			}
+		}
+		return list;
+	}
+}
+class UserCharacterContainer
+{
+	private int max=155;
+	private UserCharacter[] character=new UserCharacter[max];
+	private int amount=0;
+	
+	public boolean addCharacter(UserCharacter Character)
+	{
+		if (this.max>this.amount)
+		{
+			this.character[this.amount]=Character;
+			this.amount++;
+			return true;
+		}else {return false;}
+	}
+	
+	public int getAmount()
+	{
+		return this.amount;
+	}
+	public UserCharacter Search(String character)
+	{
+		for(int a=0;a<amount;a++)
+		{
+			if(this.character[a].getName().equals(character))
+			{
+				return this.character[a];
+			}
+		}
+		return null;
+	}
+	public String getCharacters()
+	{
+		String list="";
+		for(int a=0;a<amount;a++)
+		{
+			list+=character[a].getName();
+			if(a<amount-1)
+			{
+				list+=",";
+			}
+		}
+		return list;
+	}
+	
+	public int getMax()
+	{
+		return this.max;
+	}
+
 }
