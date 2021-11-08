@@ -14,7 +14,13 @@ public class App
 		mobaSystem.mainMenu();
 		
 	}
-	
+	/**
+	* read data from txt
+	* restrictions:
+	* MobaSystem exist.
+	*
+	* @param MobaSystem.
+	*/
 	static void leer(MobaSystem mobaSystem) throws FileNotFoundException
 	{
 		File characters=new File("Personajes.txt");

@@ -1,14 +1,5 @@
 package Program;
 
-/*
- * 
- * Definir una interfaz
- * para los contenedores
- * y operar con la interfaz
- * 
- */
-
-
 class UserContainer
 {
 	private int max=10000;

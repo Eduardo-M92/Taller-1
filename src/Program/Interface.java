@@ -4,28 +4,194 @@ import java.util.Scanner;
 
 interface MobaSystem
 {
+	/**
+	* add a skin to the system
+	* restrictions:
+	* that there is a character.
+	*
+	* @param name skin.
+	* @param quality skin.
+	* @param name character.
+	* @param price skin.
+	* @return true if possible add the skin,
+	* false in other case.
+	*/
 	boolean addSkin(String name,String quality,String nameCharacter,int price);
+	/**
+	* add a user to the system
+	* restrictions:
+	* none
+	*
+	* @param name user.
+	* @param nick.
+	* @param region.
+	* @param password.
+	* @param lvl.
+	* @param rp.
+	* @return true if possible add the user,
+	* false in other case.
+	*/
 	boolean addUser(String name,String nick,String region,String password,int lvl,int rp);
+	/**
+	* add a character to the system
+	* restrictions:
+	* none
+	*
+	* @param name character.
+	* @param rol.
+	* @return true if possible add the user,
+	* false in other case.
+	*/
 	boolean addCharacter(String name,String rol);
+	/**
+	* add a character to the user
+	* restrictions:
+	* that there is a user.
+	*
+	* @param name user.
+	* @param name character.
+	* @return true if possible add the user,
+	* false in other case.
+	*/
 	boolean addUserCharacter(String name,String characterName);
 	
+	/**
+	* get user finding
+	* restrictions:
+	* that there is a user.
+	*
+	* @param name user.
+	* @return user if possible find the user,
+	* null in other case.
+	*/
 	User findUser(String name);
+	/**
+	* get current user of system
+	* restrictions:
+	* none
+	*
+	* @return user if user exist,
+	* null in other case.
+	*/
 	User getCurrentUser();
+	/**
+	* get skin finding
+	* restrictions:
+	* none
+	*
+	* @param name skin.
+	* @return user if possible find the skin,
+	* null in other case.
+	*/
 	Skin findSkin(String name);
+	/**
+	* get character finding
+	* restrictions:
+	* none
+	*
+	* @param name user.
+	* @return character if possible find the character,
+	* null in other case.
+	*/
 	Character findCharacter(String character);
 	
+	/**
+	* add skin for the user
+	* restrictions:
+	* none
+	*
+	* @param name user.
+	* @param name character.
+	* @param name skin.
+	*
+	*/
 	void addUserCharacterSkin(String name,String character, String skin);
+	/**
+	* set current user system
+	* restrictions:
+	* none
+	*
+	* @param name user.
+	*
+	*/
 	void setCurrentUser(String name);
+	/**
+	* Start main menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void mainMenu();
+	/**
+	* Start login menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void login();
+	/**
+	* Start user menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void userMenu();
+	/**
+	* Start admin menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void adminMenu();
+	/**
+	* Start register menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void register();
+	/**
+	* Start buy skin menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void buySkin();
+	/**
+	* run show ability Skin.
+	* restrictions:
+	* none
+	*
+	*/
 	void availabilitySkin();
+	/**
+	* run show user inventory.
+	* restrictions:
+	* none
+	*
+	*/
 	void showInventory();
+	/**
+	* start rechargeRp menu.
+	* restrictions:
+	* none
+	*
+	*/
 	void rechargeRp();
+	/**
+	* show user data.
+	* restrictions:
+	* none
+	*
+	*/
 	void userData();
+	/**
+	* save global data.
+	* restrictions:
+	* Data existent.
+	*
+	*/
+	void saveData();
 	
 }
 
@@ -164,7 +330,7 @@ class MobaSystemImpl implements MobaSystem
 				userMenu();
 				break;
 			case "c":
-				
+				saveData();
 				break;
 			}
 		}
@@ -496,6 +662,7 @@ class MobaSystemImpl implements MobaSystem
 					}
 					currentUser.setRp(currentUser.getRp()-skinPrice);
 					addUserCharacterSkin(currentUser.getName(), ch, sk);
+					currentUser.setLvl(currentUser.getLvl()+1);
 					System.out.println("Compra realizada con exito nuevo saldo: "+currentUser.getRp()+"RP");
 				}
 				else
@@ -552,6 +719,7 @@ class MobaSystemImpl implements MobaSystem
 				}
 				currentUser.setRp(currentUser.getRp()-975);
 				currentUser.addCharacter(ch);
+				currentUser.setLvl(currentUser.getLvl()+3);
 				System.out.println("Personaje comprado nuevo saldo "+currentUser.getRp());
 			}
 			else {System.out.println("Personaje en posecion no se puede comprar");}
@@ -670,6 +838,11 @@ class MobaSystemImpl implements MobaSystem
 			}
 			else {System.out.println("Las contraseñas no coinciden cancelando proceso...");cicle=false;}
 		}
+	}
+	@Override
+	public void saveData()
+	{
+		
 	}
 	
 }
